@@ -1,4 +1,3 @@
-package images;
 public class MatrixMaker {
     public static void main(String[] args) {
         int[] arr = {3, 3, 3, 3, 3};

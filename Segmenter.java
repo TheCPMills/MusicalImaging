@@ -1,4 +1,3 @@
-package images;
 public class Segmenter {
     public static void main(String[] args) {
         int sizes[] = {16, 32, 30, 35, 38, 46, 32, 29, 52};
