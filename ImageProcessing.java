@@ -82,6 +82,4 @@ public class ImageProcessing {
         System.out.println("Green rowsor value = " + green);
         System.out.println("Blue rowsor value = " + blue);
     }
-
-
 }
