@@ -9,6 +9,10 @@ public class ColorOps {
         System.out.println(Arrays.toString(HSVtoRGB(360, 100, 100)));
     }
 
+    public static float getAlpha(Color color) {
+        return color.getAlpha() / 255.0f;
+    }
+
     public static int[] getRGB(Color color) {
         int clr = color.getRGB();
         return new int[]{((clr & 0x00FF0000) >> 16), ((clr & 0x0000ff00) >> 8), (clr & 0x000000ff)};
@@ -32,11 +36,11 @@ public class ColorOps {
         if (delta == 0) {
             hsv[0] = 0;
         } else if (max == r) {
-            hsv[0] = 60 * Math.floorMod((int) ((g - b) / delta), 6);
+            hsv[0] = (int) ((60 * (floorMod(((g - b) / delta), 6))) + 0.5);
         } else if (max == g) {
-            hsv[0] = (int) (60 * (((b - r) / delta) + 2));
+            hsv[0] = (int) ((60 * (((b - r) / delta) + 2)) + 0.5);
         } else {
-            hsv[0] = (int) (60 * (((r - g) / delta) + 4));
+            hsv[0] = (int) ((60 * (((r - g) / delta) + 4)) + 0.5);
         }
 
         hsv[1] = (max == 0) ? 0 : ((int) ((delta / max * 1000) + 0.5)) / 10.0f;
@@ -96,5 +100,10 @@ public class ColorOps {
 
     public static int[] HSVtoRGB(float[] hsv) {
         return HSVtoRGB(((int) (hsv[0] + 0.5)), hsv[1], hsv[2]);
+    }
+
+    private static float floorMod(float a, float b) {
+        float result = a % b;
+        return (result >= 0) ? result : result + b;
     }
 }

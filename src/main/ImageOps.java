@@ -6,19 +6,13 @@ import java.awt.*;
 
 public class ImageOps {
     public static void main(String[] args) throws IOException {
-        // System.out.println(redestPixel("box.png"));
-        // System.out.println(greenestPixel("box.png"));
-        // System.out.println(bluestPixel("box.png"));
-        // System.out.println(greatestHuePixel("box.png"));
-        // System.out.println(mostSaturatedPixel("box.png"));
-        // System.out.println(brightestPixel("box.png"));
-
-        for (int row = 0; row < 4; row++) {
-            for (int column = 0; column < 4; column++) {
-                ImageProcessing.printPixelColorsHSV(column, row);
-                System.out.println();
-            }
-        }
+        System.out.println(redestPixel("box.png"));
+        System.out.println(greenestPixel("box.png"));
+        System.out.println(bluestPixel("box.png"));
+        System.out.println(greatestHuePixel("box.png"));
+        System.out.println(mostSaturatedPixel("box.png"));
+        System.out.println(brightestPixel("box.png"));
+        System.out.println(mostTransparentPixel("box.png"));
     }
 
     public static Point redestPixel(String fileName) throws IOException {
@@ -162,6 +156,31 @@ public class ImageOps {
 
                 if (value > maxValue) {
                     maxValue = value;
+                    x = column;
+                    y = row;
+                }
+
+            }
+        }
+        return new Point(x, y);
+    }
+
+    public static Point mostTransparentPixel(String fileName) throws IOException {
+        File file = new File("assets/images/" + fileName);
+        BufferedImage image = ImageIO.read(file);
+
+        int x = -1, y = -1;
+        float maxAlpha = -1;
+
+        int height = image.getHeight();
+        int width = image.getWidth();
+
+        for (int row = 0; row < height; row++) {
+            for (int column = 0; column < width; column++) {
+                float alpha = ColorOps.getAlpha(new Color(image.getRGB(column, row)));
+
+                if (alpha > maxAlpha) {
+                    maxAlpha = alpha;
                     x = column;
                     y = row;
                 }

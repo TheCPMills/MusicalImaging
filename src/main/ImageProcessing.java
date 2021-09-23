@@ -73,6 +73,10 @@ public class ImageProcessing {
         File file = new File("assets/images/"+ fileName);
         BufferedImage image = ImageIO.read(file);
 
+        pixelateAndShrink(image, rows, columns);
+    }
+
+    public static void pixelateAndShrink(BufferedImage image, int rows, int columns) {
         int pixHeight = rows;
         int pixWidth = columns;
 
@@ -115,7 +119,12 @@ public class ImageProcessing {
                 blue = 0;
             }
         }
-        ImageIO.write(img, "png", new File("assets/images/pixelated" + fileName.substring(0, fileName.lastIndexOf(".")) + ".png"));
+        try {
+            ImageIO.write(img, "png", new File("assets/images/pixelatedImage.png"));
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
     }
 
     public static void printPixelColorsRGB(int row,int cols) throws IOException {
