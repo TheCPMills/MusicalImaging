@@ -1,25 +1,23 @@
 package src.main;
+
 public class Segmenter {
     public static void main(String[] args) {
-        int sizes[] = {16, 32, 30, 35, 38, 46, 32, 29, 52};
-        int divisions[] = {8, 6, 7, 8, 7, 8, 7, 6, 9};
+        int sizes[] = { 16, 32, 30, 35, 38, 46, 32, 29, 52 };
+        int divisions[] = { 8, 6, 7, 8, 7, 8, 7, 6, 9 };
 
         /**
          * 16 / 8 = 2 R0 [2, 2, 2, 2, 2, 2, 2, 2]
          * 
-         * 32 / 6 = 5 R2 [5, 5, 6, 6, 5, 5]
-         * 30 / 7 = 4 R2 [4, 4, 5, 4, 5, 4, 4]
-         * 35 / 8 = 4 R3 [4, 4, 3, 3, 3, 4, 4, 4]
-         * 38 / 7 = 5 R3 [5, 5, 6, 6, 6, 5, 5]
+         * 32 / 6 = 5 R2 [5, 5, 6, 6, 5, 5] 30 / 7 = 4 R2 [4, 4, 5, 4, 5, 4, 4] 35 / 8 =
+         * 4 R3 [4, 4, 3, 3, 3, 4, 4, 4] 38 / 7 = 5 R3 [5, 5, 6, 6, 6, 5, 5]
          * 
-         * 46 / 8 = 5 R6 [6, 6, 6, 5, 5, 6, 6, 6]
-         * 32 / 7 = 4 R4 [5, 5, 4, 4, 4, 5, 5]
-         * 29 / 6 = 4 R5 [5, 5, 4, 5, 5, 5]
-         * 52 / 9 = 5 R7 [6, 6, 6, 5, 6, 5, 6, 6, 6]
-        */
+         * 46 / 8 = 5 R6 [6, 6, 6, 5, 5, 6, 6, 6] 32 / 7 = 4 R4 [5, 5, 4, 4, 4, 5, 5] 29
+         * / 6 = 4 R5 [5, 5, 4, 5, 5, 5] 52 / 9 = 5 R7 [6, 6, 6, 5, 6, 5, 6, 6, 6]
+         */
 
         for (int i = 0; i < sizes.length; i++) {
-            System.out.printf("Size: %d, Divisions: %d, Segments: %s\n", sizes[i], divisions[i], java.util.Arrays.toString(segment(sizes[i], divisions[i])));
+            System.out.printf("Size: %d, Divisions: %d, Segments: %s\n", sizes[i], divisions[i],
+                    java.util.Arrays.toString(segment(sizes[i], divisions[i])));
         }
     }
 

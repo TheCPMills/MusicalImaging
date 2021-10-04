@@ -1,4 +1,5 @@
 package src.main;
+
 import javax.sound.midi.InvalidMidiDataException;
 import javax.sound.midi.MidiEvent;
 import javax.sound.midi.MidiSystem;
@@ -63,10 +64,9 @@ public class PlaySequencer {
 		try {
 			MidiSystem.write(sequence, 1, new File("Goodbye.mid"));
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 	}
 
 	// Create a sequence and set all MIDI events
@@ -94,9 +94,12 @@ public class PlaySequencer {
 	private void addMelody(Track track, int channel) {
 		int tick = 0;
 
-		int notes[] =      { 0, 62, 67, 62, 69, 71,  0, 71, 71, 69, 67, 69, 71, 69,  0, 67, 66, 64, 66, 67,  0, 64, 63, 67,  0, 67, 69, 71, 69, 67};
-		int durations[] =  {60,  2, 14,  2,  1,  9,  7,  1,  2,  2,  1,  2,  2,  2,  1, 2,  2,  2,  1,  1,   2,  1,  2,  2,   1,  2,  1,  1,  1, 15};
-		int velocities[] = { 0, 99, 99, 99, 99, 99,  0, 99, 99, 99, 99, 99, 99, 99,  0, 99, 99, 99, 99, 99,  0, 99, 99, 99,  0, 99, 99, 99, 99, 99};
+		int notes[] = { 0, 62, 67, 62, 69, 71, 0, 71, 71, 69, 67, 69, 71, 69, 0, 67, 66, 64, 66, 67, 0, 64, 63, 67, 0,
+				67, 69, 71, 69, 67 };
+		int durations[] = { 60, 2, 14, 2, 1, 9, 7, 1, 2, 2, 1, 2, 2, 2, 1, 2, 2, 2, 1, 1, 2, 1, 2, 2, 1, 2, 1, 1, 1,
+				15 };
+		int velocities[] = { 0, 99, 99, 99, 99, 99, 0, 99, 99, 99, 99, 99, 99, 99, 0, 99, 99, 99, 99, 99, 0, 99, 99, 99,
+				0, 99, 99, 99, 99, 99 };
 
 		for (int i = 0; i < notes.length; i++) {
 			if (i == 0) {
@@ -110,9 +113,17 @@ public class PlaySequencer {
 	private void addHarmony(Track track, int channel) {
 		int tick = 0;
 
-		int chords[][] =   {{50, 55, 59}, {50, 55, 59}, {50, 55, 59}, {50, 55, 59}, {50, 55, 59}, {50, 55, 59}, {50, 55, 59}, {50, 55, 59}, {50, 55, 59}, {50, 55, 59}, {50, 55, 59}, {50, 55, 59}, {50, 55, 59}, {50, 55, 59}, {50, 55, 59}, {0}, {50, 55, 59}, {50, 55, 59}, {50, 55, 59}, {50, 55, 59}, {52, 54, 57}, {52, 54, 57}, {52, 54, 57}, {52, 54, 59}, {52, 55, 59}, {52, 55, 59}, {50, 55, 59}, {50, 55, 59}, {52, 55, 60}, {52, 55, 62}, {51, 55, 59}, {52, 55, 60}, {50, 55, 59}, {50, 55, 60}, {52, 54, 57}, {52, 54, 59}, {52, 55, 59}};
-		int durations[] =  {4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 8};
-		int velocities[] = {99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 99};
+		int chords[][] = { { 50, 55, 59 }, { 50, 55, 59 }, { 50, 55, 59 }, { 50, 55, 59 }, { 50, 55, 59 },
+				{ 50, 55, 59 }, { 50, 55, 59 }, { 50, 55, 59 }, { 50, 55, 59 }, { 50, 55, 59 }, { 50, 55, 59 },
+				{ 50, 55, 59 }, { 50, 55, 59 }, { 50, 55, 59 }, { 50, 55, 59 }, { 0 }, { 50, 55, 59 }, { 50, 55, 59 },
+				{ 50, 55, 59 }, { 50, 55, 59 }, { 52, 54, 57 }, { 52, 54, 57 }, { 52, 54, 57 }, { 52, 54, 59 },
+				{ 52, 55, 59 }, { 52, 55, 59 }, { 50, 55, 59 }, { 50, 55, 59 }, { 52, 55, 60 }, { 52, 55, 62 },
+				{ 51, 55, 59 }, { 52, 55, 60 }, { 50, 55, 59 }, { 50, 55, 60 }, { 52, 54, 57 }, { 52, 54, 59 },
+				{ 52, 55, 59 } };
+		int durations[] = { 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4,
+				4, 4, 4, 4, 4, 8 };
+		int velocities[] = { 99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 99,
+				99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 99 };
 
 		for (int i = 0; i < chords.length; i++) {
 			if (i == 0) {
@@ -126,9 +137,9 @@ public class PlaySequencer {
 	private void addBass(Track track, int channel) {
 		int tick = 0;
 
-		int notes[] =      {31, 38, 31, 38, 31, 38, 31,  0, 31, 38, 39, 40, 40, 38, 40, 40, 40, 43, 43, 45, 42, 40};
-		int durations[] =  {14,  2, 14,  2, 14,  2, 12,  4, 14,  2, 16,  6,  2,  8,  6,  2,  8,  6,  2,  6,  2,  8};
-		int velocities[] = {99, 99, 99, 99, 99, 99, 99,  0, 99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 99};
+		int notes[] = { 31, 38, 31, 38, 31, 38, 31, 0, 31, 38, 39, 40, 40, 38, 40, 40, 40, 43, 43, 45, 42, 40 };
+		int durations[] = { 14, 2, 14, 2, 14, 2, 12, 4, 14, 2, 16, 6, 2, 8, 6, 2, 8, 6, 2, 6, 2, 8 };
+		int velocities[] = { 99, 99, 99, 99, 99, 99, 99, 0, 99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 99 };
 
 		for (int i = 0; i < notes.length; i++) {
 			if (i == 0) {
@@ -188,15 +199,15 @@ public class PlaySequencer {
 	}
 
 	public MidiEvent makeEvent(int command, int channel, int note, int velocity, int tick) {
- 
-        MidiEvent event = null;
-        try {
+
+		MidiEvent event = null;
+		try {
 			ShortMessage a = new ShortMessage();
-            a.setMessage(command, channel, note, velocity);
-            event = new MidiEvent(a, tick);
-        } catch (Exception ex) {
+			a.setMessage(command, channel, note, velocity);
+			event = new MidiEvent(a, tick);
+		} catch (Exception ex) {
 			ex.printStackTrace();
-        }
-        return event;
-    }
+		}
+		return event;
+	}
 }

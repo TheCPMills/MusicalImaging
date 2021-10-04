@@ -1,4 +1,5 @@
 package src.main;
+
 import java.io.*;
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -102,7 +103,7 @@ public class ImageOps {
 
         for (int row = 0; row < height; row++) {
             for (int column = 0; column < width; column++) {
-                float hue = ColorOps.getHSV(new Color(image.getRGB(column, row)))[0];
+                float hue = ColorOps.hexToHSV(image.getRGB(column, row))[0];
 
                 if (hue > maxHue) {
                     maxHue = hue;
@@ -114,7 +115,7 @@ public class ImageOps {
         }
         return new Point(x, y);
     }
-    
+
     public static Point mostSaturatedPixel(String fileName) throws IOException {
         File file = new File("assets/images/" + fileName);
         BufferedImage image = ImageIO.read(file);
@@ -127,7 +128,7 @@ public class ImageOps {
 
         for (int row = 0; row < height; row++) {
             for (int column = 0; column < width; column++) {
-                float saturation = ColorOps.getHSV(new Color(image.getRGB(column, row)))[1];
+                float saturation = ColorOps.hexToHSV(image.getRGB(column, row))[1];
 
                 if (saturation > maxSaturation) {
                     maxSaturation = saturation;
@@ -152,7 +153,7 @@ public class ImageOps {
 
         for (int row = 0; row < height; row++) {
             for (int column = 0; column < width; column++) {
-                float value = ColorOps.getHSV(new Color(image.getRGB(column, row)))[2];
+                float value = ColorOps.hexToHSV(image.getRGB(column, row))[2];
 
                 if (value > maxValue) {
                     maxValue = value;
@@ -188,5 +189,25 @@ public class ImageOps {
             }
         }
         return new Point(x, y);
+    }
+
+    public static int averagePixelColor(String fileName) throws IOException {
+        File file = new File("assets/images/" + fileName);
+        BufferedImage image = ImageIO.read(file);
+
+        int red = 0, green = 0, blue = 0;
+        int height = image.getHeight();
+        int width = image.getWidth();
+
+        for (int row = 0; row < height; row++) {
+            for (int column = 0; column < width; column++) {
+                int clr = image.getRGB(column, row);
+
+                red += (clr & 0xFF0000) >> 16;
+                green += (clr & 0x00FF00) >> 8;
+                blue += clr & 0x0000FF;
+            }
+        }
+        return new Color(red / (height * width), green / (height * width), blue / (height * width)).getRGB();
     }
 }

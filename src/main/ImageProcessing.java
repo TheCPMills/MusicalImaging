@@ -1,19 +1,21 @@
 package src.main;
+
 import java.io.*;
 import javax.imageio.ImageIO;
 import java.util.*;
+import java.util.List;
 import java.awt.image.BufferedImage;
 import java.awt.*;
 
 public class ImageProcessing {
     BufferedImage img;
-    
+
     public ImageProcessing(int width, int height) {
     }
 
     public static void main(String args[]) throws IOException {
         pixelate("squiddy.jpg", 44, 25);
-        pixelateAndShrink("squiddy.jpg", 44, 25); 
+        pixelateAndShrink("squiddy.jpg", 44, 25);
 
     }
 
@@ -21,6 +23,10 @@ public class ImageProcessing {
         File file = new File("assets/images/" + fileName);
         BufferedImage image = ImageIO.read(file);
 
+        pixelateAndShrink(image, rows, columns);
+    }
+
+    public static void pixelate(BufferedImage image, int rows, int columns) {
         int height = image.getHeight();
         int width = image.getWidth();
 
@@ -66,11 +72,15 @@ public class ImageProcessing {
                 blue = 0;
             }
         }
-        ImageIO.write(img, "png", new File("assets/images/" + fileName.substring(0, fileName.lastIndexOf(".")) + ".png"));
+        try {
+            ImageIO.write(img, "png", new File("assets/images/image.png"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public static void pixelateAndShrink(String fileName, int rows, int columns) throws IOException {
-        File file = new File("assets/images/"+ fileName);
+        File file = new File("assets/images/" + fileName);
         BufferedImage image = ImageIO.read(file);
 
         pixelateAndShrink(image, rows, columns);
@@ -122,33 +132,69 @@ public class ImageProcessing {
         try {
             ImageIO.write(img, "png", new File("assets/images/pixelatedImage.png"));
         } catch (IOException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
     }
 
-    public static void printPixelColorsRGB(int row,int cols) throws IOException {
-        File file = new File("assets/images/box.png");
+    public static List<Color> listPixels(String fileName) throws IOException {
+        File file = new File("assets/images/" + fileName);
         BufferedImage image = ImageIO.read(file);
 
-        int clr = image.getRGB(row, cols);
-        int red = (clr & 0x00ff0000) >> 16;
-        int green = (clr & 0x0000ff00) >> 8;
-        int blue = clr & 0x000000ff;
-
-        System.out.println("Red Color value = " + red);
-        System.out.println("Green Color value = " + green);
-        System.out.println("Blue Color value = " + blue);
+        return listPixels(image);
     }
 
-    public static void printPixelColorsHSV(int row, int cols) throws IOException {
-        File file = new File("assets/images/box.png");
+    public static List<Color> listPixels(BufferedImage image) {
+        List<Color> pixelColors = new LinkedList<>();
+        int height = image.getHeight();
+        int width = image.getWidth();
+
+        for (int row = 0; row < height; row++) {
+            for (int column = 0; column < width; column++) {
+                pixelColors.add(new Color(image.getRGB(column, row)));
+            }
+        }
+
+        return pixelColors;
+    }
+
+    public static List<Color> spiral(String fileName) throws IOException {
+        File file = new File("assets/images/" + fileName);
         BufferedImage image = ImageIO.read(file);
 
-        float[] hsv = ColorOps.getHSV(new Color(image.getRGB(row, cols)));
+        return spiral(image);
+    }
 
-        System.out.println("Hue = " + hsv[0]);
-        System.out.println("Saturation = " + hsv[1]);
-        System.out.println("Value = " + hsv[2]);
+    public static List<Color> spiral(BufferedImage image) {
+        List<Color> pixelColors = new LinkedList<>();
+        int height = image.getHeight(), width = image.getWidth();
+        int i, row = 0, column = 0;
+
+        while (row < height && column < width) {
+            for (i = column; i < width; ++i) {
+                pixelColors.add(new Color(image.getRGB(i, row)));
+            }
+            row++;
+
+            for (i = row; i < height; ++i) {
+                pixelColors.add(new Color(image.getRGB(width - 1, i)));
+            }
+            width--;
+
+            if (row < height) {
+                for (i = width - 1; i >= column; --i) {
+                    pixelColors.add(new Color(image.getRGB(i, height - 1)));
+                }
+                height--;
+            }
+
+            if (column < width) {
+                for (i = height - 1; i >= row; --i) {
+                    pixelColors.add(new Color(image.getRGB(column, i)));
+                }
+                column++;
+            }
+        }
+
+        return pixelColors;
     }
 }
