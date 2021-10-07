@@ -1,4 +1,4 @@
-package src.main;
+package main;
 
 import java.io.*;
 import javax.imageio.ImageIO;
@@ -7,17 +7,17 @@ import java.awt.*;
 
 public class ImageOps {
     public static void main(String[] args) throws IOException {
-        System.out.println(redestPixel("box.png"));
-        System.out.println(greenestPixel("box.png"));
-        System.out.println(bluestPixel("box.png"));
-        System.out.println(greatestHuePixel("box.png"));
-        System.out.println(mostSaturatedPixel("box.png"));
-        System.out.println(brightestPixel("box.png"));
-        System.out.println(mostTransparentPixel("box.png"));
+        System.out.println(redestPixel("assets/images/box.png"));
+        System.out.println(greenestPixel("assets/images/box.png"));
+        System.out.println(bluestPixel("assets/images/box.png"));
+        System.out.println(greatestHuePixel("assets/images/box.png"));
+        System.out.println(mostSaturatedPixel("assets/images/box.png"));
+        System.out.println(brightestPixel("assets/images/box.png"));
+        System.out.println(mostTransparentPixel("assets/images/box.png"));
     }
 
     public static Point redestPixel(String fileName) throws IOException {
-        File file = new File("assets/images/" + fileName);
+        File file = new File(fileName);
         BufferedImage image = ImageIO.read(file);
 
         int x = -1, y = -1;
@@ -42,7 +42,7 @@ public class ImageOps {
     }
 
     public static Point greenestPixel(String fileName) throws IOException {
-        File file = new File("assets/images/" + fileName);
+        File file = new File(fileName);
         BufferedImage image = ImageIO.read(file);
 
         int x = -1, y = -1;
@@ -67,7 +67,7 @@ public class ImageOps {
     }
 
     public static Point bluestPixel(String fileName) throws IOException {
-        File file = new File("assets/images/" + fileName);
+        File file = new File(fileName);
         BufferedImage image = ImageIO.read(file);
 
         int x = -1, y = -1;
@@ -92,7 +92,7 @@ public class ImageOps {
     }
 
     public static Point greatestHuePixel(String fileName) throws IOException {
-        File file = new File("assets/images/" + fileName);
+        File file = new File(fileName);
         BufferedImage image = ImageIO.read(file);
 
         int x = -1, y = -1;
@@ -117,7 +117,7 @@ public class ImageOps {
     }
 
     public static Point mostSaturatedPixel(String fileName) throws IOException {
-        File file = new File("assets/images/" + fileName);
+        File file = new File(fileName);
         BufferedImage image = ImageIO.read(file);
 
         int x = -1, y = -1;
@@ -142,7 +142,7 @@ public class ImageOps {
     }
 
     public static Point brightestPixel(String fileName) throws IOException {
-        File file = new File("assets/images/" + fileName);
+        File file = new File(fileName);
         BufferedImage image = ImageIO.read(file);
 
         int x = -1, y = -1;
@@ -167,7 +167,7 @@ public class ImageOps {
     }
 
     public static Point mostTransparentPixel(String fileName) throws IOException {
-        File file = new File("assets/images/" + fileName);
+        File file = new File(fileName);
         BufferedImage image = ImageIO.read(file);
 
         int x = -1, y = -1;
@@ -192,7 +192,7 @@ public class ImageOps {
     }
 
     public static int averagePixelColor(String fileName) throws IOException {
-        File file = new File("assets/images/" + fileName);
+        File file = new File(fileName);
         BufferedImage image = ImageIO.read(file);
 
         int red = 0, green = 0, blue = 0;

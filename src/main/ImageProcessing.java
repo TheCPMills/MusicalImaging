@@ -1,4 +1,4 @@
-package src.main;
+package main;
 
 import java.io.*;
 import javax.imageio.ImageIO;
@@ -14,13 +14,13 @@ public class ImageProcessing {
     }
 
     public static void main(String args[]) throws IOException {
-        pixelate("squiddy.jpg", 44, 25);
-        pixelateAndShrink("squiddy.jpg", 44, 25);
+        pixelate("assets/images/squiddy.jpg", 44, 25);
+        pixelateAndShrink("assets/images/squiddy.jpg", 44, 25);
 
     }
 
     public static void pixelate(String fileName, int rows, int columns) throws IOException {
-        File file = new File("assets/images/" + fileName);
+        File file = new File(fileName);
         BufferedImage image = ImageIO.read(file);
 
         pixelateAndShrink(image, rows, columns);
@@ -80,7 +80,7 @@ public class ImageProcessing {
     }
 
     public static void pixelateAndShrink(String fileName, int rows, int columns) throws IOException {
-        File file = new File("assets/images/" + fileName);
+        File file = new File(fileName);
         BufferedImage image = ImageIO.read(file);
 
         pixelateAndShrink(image, rows, columns);
@@ -137,7 +137,7 @@ public class ImageProcessing {
     }
 
     public static List<Color> listPixels(String fileName) throws IOException {
-        File file = new File("assets/images/" + fileName);
+        File file = new File(fileName);
         BufferedImage image = ImageIO.read(file);
 
         return listPixels(image);
@@ -158,7 +158,7 @@ public class ImageProcessing {
     }
 
     public static List<Color> spiral(String fileName) throws IOException {
-        File file = new File("assets/images/" + fileName);
+        File file = new File(fileName);
         BufferedImage image = ImageIO.read(file);
 
         return spiral(image);

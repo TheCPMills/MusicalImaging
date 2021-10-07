@@ -1,4 +1,4 @@
-package src.main;
+package main;
 
 import java.awt.Color;
 import java.awt.image.BufferedImage;
@@ -13,7 +13,6 @@ import noise.fractal.*;
 import random.*;
 import javax.imageio.ImageIO;
 import javax.vecmath.Point2i;
-
 public class Algorithm {
     // for each part, there is an offset for pitches and durations so that the same
     // pixel can have different effects (circular array)
@@ -43,9 +42,13 @@ public class Algorithm {
             { 0, 0, 2, 4, 4, 5, 5, 7, 7, 9, 10, 10, 12 }, { 0, 0, 1, 3, 3, 5, 5, 6, 6, 8, 10, 10, 12 } };
 
     public static void main(String[] args) {
+        startConversion("assets/images/rainbow.jpg", "assets/audio/");
+    }
+
+    public static void startConversion(String fileName, String destination) {
         reset();
-        String fileName = "squiddy.jpg";
-        File file = new File("assets/images/" + fileName);
+        String imageName = fileName.substring(fileName.lastIndexOf("/") + 1, fileName.lastIndexOf("."));
+        File file = new File(fileName);
         melodyMidiFile = new MidiFile();
         harmonyMidiFile = new MidiFile();
         bassMidiFile = new MidiFile();
@@ -53,10 +56,10 @@ public class Algorithm {
         try {
             image = ImageIO.read(file);
             algorithm(fileName);
-            melodyMidiFile.writeToFile("assets/audio/melody.mid");
-            harmonyMidiFile.writeToFile("assets/audio/harmony.mid");
-            bassMidiFile.writeToFile("assets/audio/bass.mid");
-            percussionMidiFile.writeToFile("assets/audio/percussion.mid");
+            melodyMidiFile.writeToFile(destination + "/" + imageName + "Melody.mid");
+            harmonyMidiFile.writeToFile(destination + "/" + imageName + "Harmony.mid");
+            bassMidiFile.writeToFile(destination + "/" + imageName + "Bass.mid");
+            percussionMidiFile.writeToFile(destination + "/" + imageName + "Percussion.mid");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -80,8 +83,8 @@ public class Algorithm {
                                                          // average color's hex value
         float[] hsv = ColorOps.hexToHSV(seed); // convert average color to HSV color scale
 
-        key = (int) hsv[0] / 30; // set the key based on the hueof the average color
-        mode = (int) Math.floor(14 / 100f * hsv[1]); // set the mode/scale based on the saturation of the average color
+        key = (int) Math.floor(12 / 100f * hsv[1]) % 12; // set the key based on the saturation of the average color
+        mode = (int) Math.floor(16 / 360 * hsv[0]) % 16; // set the mode/scale based on the hue of the average color
         tempo = (int) (1.2f * hsv[2] + 60); // set the tempo based on the value of the average color
 
         slice(); // slice the image
@@ -170,13 +173,12 @@ public class Algorithm {
         melody = new ArrayList[] { notes, durations, velocities };
 
         Noise melodyNoise = new Perlin(seed);
-        NoiseMapGenerator.generate(melodyNoise, pixelatedImage.getWidth(), pixelatedImage.getHeight(),
-                "assets/images/melodyNoise");
+        NoiseMapGenerator.generate(melodyNoise, pixelatedImage.getWidth(), pixelatedImage.getHeight(), "assets/images/melodyNoise");
         List<Color> noiseSpiral = null;
         long averageNoiseColor = -1;
         try {
-            noiseSpiral = ImageProcessing.spiral("melodyNoise.png");
-            averageNoiseColor = (long) ImageOps.averagePixelColor("melodyNoise.png");
+            noiseSpiral = ImageProcessing.spiral("assets/images/melodyNoise.png");
+            averageNoiseColor = (long) ImageOps.averagePixelColor("assets/images/melodyNoise.png");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -200,13 +202,12 @@ public class Algorithm {
         harmony = new ArrayList[] { notes, durations, velocities };
 
         Noise harmonyNoise = new Simplex(seed);
-        NoiseMapGenerator.generate(harmonyNoise, pixelatedImage.getWidth(), pixelatedImage.getHeight(),
-                "assets/images/harmonyNoise");
+        NoiseMapGenerator.generate(harmonyNoise, pixelatedImage.getWidth(), pixelatedImage.getHeight(), "assets/images/harmonyNoise");
         List<Color> noiseSpiral = null;
         long averageNoiseColor = -1;
         try {
-            noiseSpiral = ImageProcessing.spiral("harmonyNoise.png");
-            averageNoiseColor = (long) ImageOps.averagePixelColor("harmonyNoise.png");
+            noiseSpiral = ImageProcessing.spiral("assets/images/harmonyNoise.png");
+            averageNoiseColor = (long) ImageOps.averagePixelColor("assets/images/harmonyNoise.png");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -230,13 +231,12 @@ public class Algorithm {
         bass = new ArrayList[] { notes, durations, velocities };
 
         Noise bassNoise = new Value(seed);
-        NoiseMapGenerator.generate(bassNoise, pixelatedImage.getWidth(), pixelatedImage.getHeight(),
-                "assets/images/bassNoise");
+        NoiseMapGenerator.generate(bassNoise, pixelatedImage.getWidth(), pixelatedImage.getHeight(), "assets/images/bassNoise");
         List<Color> noiseSpiral = null;
         long averageNoiseColor = -1;
         try {
-            noiseSpiral = ImageProcessing.spiral("bassNoise.png");
-            averageNoiseColor = (long) ImageOps.averagePixelColor("bassNoise.png");
+            noiseSpiral = ImageProcessing.spiral("assets/images/bassNoise.png");
+            averageNoiseColor = (long) ImageOps.averagePixelColor("assets/images/bassNoise.png");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -260,13 +260,12 @@ public class Algorithm {
         percussion = new ArrayList[] { notes, durations, velocities };
 
         Noise percussionNoise = new FBM(seed);
-        NoiseMapGenerator.generate(percussionNoise, pixelatedImage.getWidth(), pixelatedImage.getHeight(),
-                "assets/images/percussionNoise");
+        NoiseMapGenerator.generate(percussionNoise, pixelatedImage.getWidth(), pixelatedImage.getHeight(), "assets/images/percussionNoise");
         List<Color> noiseSpiral = null;
         long averageNoiseColor = -1;
         try {
-            noiseSpiral = ImageProcessing.spiral("percussionNoise.png");
-            averageNoiseColor = (long) ImageOps.averagePixelColor("percussionNoise.png");
+            noiseSpiral = ImageProcessing.spiral("assets/images/percussionNoise.png");
+            averageNoiseColor = (long) ImageOps.averagePixelColor("assets/images/percussionNoise.png");
         } catch (IOException e) {
             e.printStackTrace();
         }

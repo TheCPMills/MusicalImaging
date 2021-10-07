@@ -1,4 +1,4 @@
-package src.main;
+package main;
 
 import java.io.*;
 import java.util.*;
@@ -21,26 +21,24 @@ public class MidiFile {
     static final int MINIM = 32;
     static final int SEMIBREVE = 64;
 
-    // 64, 32, 48, 21, 16, 24, 11, 8, 12, 5, 4
-
     // Standard MIDI file header, for one-track file
-    static final int header[] = new int[] { 0x4d, 0x54, 0x68, 0x64, 0x00, 0x00, 0x00, 0x06, 0x00, 0x00, // single-track
-                                                                                                        // format
+    static final int header[] = new int[] { 0x4d, 0x54, 0x68, 0x64, 0x00, 0x00, 0x00, 0x06, 0x00, 0x00, // single-track format
             0x00, 0x01, // one track
             0x00, 0x10, // 16 ticks per quarter
-            0x4d, 0x54, 0x72, 0x6B };
+            0x4d, 0x54, 0x72, 0x6B
+        };
 
     // Standard footer
     static final int footer[] = new int[] { 0x01, 0xFF, 0x2F, 0x00 };
 
     // A MIDI event to set the tempo
-    static final int tempoEvent[] = new int[] { 0x00, 0xFF, 0x51, 0x03, 0x0F, 0x42, 0x40 }; // Default 1 million usec
-                                                                                            // per crotchet
+    static final int tempoEvent[] = new int[] { 0x00, 0xFF, 0x51, 0x03, 0x0F, 0x42, 0x40 }; // Default 1 million usec per crotchet
 
     // A MIDI event to set the key signature. This is irrelent to playback, but
     // necessary for editing applications
     static final int keySigEvent[] = new int[] { 0x00, 0xFF, 0x59, 0x02, 0x00, // C
-            0x00 }; // major
+            0x00 // major
+        }; 
 
     // A MIDI event to set the time signature. This is irrelent to playback, but
     // necessary for editing applications
@@ -174,20 +172,25 @@ public class MidiFile {
     }
 
     /**
-     * Test method -- creates a file test1.mid when the class is executed
+     * Test method -- creates a file test.mid when the class is executed
      */
     public static void main(String[] args) throws Exception {
         MidiFile mf = new MidiFile();
 
-        mf.noteOnOffNow(CROTCHET, 65, 127);
-        mf.noteOnOffNow(QUAVER, 60, 127);
-        mf.noteOnOffNow(CROTCHET, 67, 127);
-        mf.noteOnOffNow(CROTCHET, 66, 127);
-        mf.noteOnOffNow(CROTCHET, 67, 127);
-        mf.noteOnOffNow(QUAVER, 59, 127);
-        mf.noteOnOffNow(QUAVER, 62, 127);
-        mf.noteOnOffNow(CROTCHET, 61, 127);
-        mf.noteOnOffNow(CROTCHET, 60, 127);
+        mf.noteOnOffNow(CROTCHET, 74, 127);
+        mf.noteOnOffNow(CROTCHET, 79, 127);
+        mf.noteOnOffNow(CROTCHET, 81, 127);
+        mf.noteOnOffNow(CROTCHET, 79, 127);
+        mf.noteOnOffNow(CROTCHET, 83, 127);
+        mf.noteOnOffNow(QUAVER, 79, 127);
+        mf.noteOnOffNow(QUAVER, 79, 127);
+        mf.noteOnOffNow(QUAVER, 84, 127);
+        mf.noteOnOffNow(QUAVER, 83, 127);
+        mf.noteOnOffNow(QUAVER, 81, 127);
+        mf.noteOnOffNow(QUAVER, 79, 127);
+        mf.noteOnOffNow(QUAVER, 81, 127);
+        mf.noteOnOffNow(SEMIQUAVER, 83, 127);
+        mf.noteOnOffNow(28, 83, 127);
 
         mf.writeToFile("test.mid");
     }
