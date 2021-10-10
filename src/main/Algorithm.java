@@ -32,7 +32,7 @@ public class Algorithm {
     private static MidiFile harmonyMidiFile;
     private static MidiFile bassMidiFile;
     private static MidiFile percussionMidiFile;
-    private static final int[][] modes = { { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12 },
+    private static final int[][] modes = {{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12},
             { 0, 0, 2, 4, 4, 5, 5, 7, 7, 9, 11, 11, 12 }, { 0, 0, 2, 3, 3, 5, 5, 7, 7, 8, 10, 10, 12 },
             { 0, 0, 2, 3, 3, 5, 5, 7, 7, 9, 11, 11, 12 }, { 0, 0, 2, 3, 3, 5, 5, 7, 7, 8, 11, 11, 12 },
             { 0, 0, 2, 3, 4, 4, 7, 7, 7, 9, 9, 12, 12 }, { 0, 0, 3, 5, 6, 6, 7, 7, 7, 10, 10, 12, 12 },
@@ -81,11 +81,11 @@ public class Algorithm {
     private static void algorithm(String fileName) throws IOException {
         int seed = ImageOps.averagePixelColor(fileName); // get average image color and set the seed based off the
                                                          // average color's hex value
-        float[] hsv = ColorOps.hexToHSV(seed); // convert average color to HSV color scale
+        int[] rgb = ColorOps.hexToRGB(seed); // convert average color to HSV color scale
 
-        key = (int) Math.floor(12 / 100f * hsv[1]) % 12; // set the key based on the saturation of the average color
-        mode = (int) Math.floor(16 / 360 * hsv[0]) % 16; // set the mode/scale based on the hue of the average color
-        tempo = (int) (1.2f * hsv[2] + 60); // set the tempo based on the value of the average color
+        key = (int) Math.round(11 / 255f * rgb[0]); // set the key based on the saturation of the average color
+        mode = (int) Math.round(15 / 255f * rgb[1]); // set the mode/scale based on the hue of the average color
+        tempo = (int) (120 / 255f * rgb[2] + 60); // set the tempo based on the value of the average color
 
         slice(); // slice the image
         pixelatedImage = ImageIO.read(new File("assets/images/pixelatedImage.png")); // get a reference to the sliced
@@ -184,9 +184,10 @@ public class Algorithm {
         }
 
         for (int i = 0; i < pixelColors.size(); i++) {
-            int pitch = (int) MathOps.round(MathOps.map(pixelColors.get(i).getRed(), 0, 255, 0, 11));
-            int duration = (int) MathOps.round(MathOps.map(pixelColors.get(i).getGreen(), 0, 255, 0, 4));
-            int octave = (int) MathOps.round(MathOps.map(pixelColors.get(i).getBlue(), 0, 255, -1, 1));
+            float[] hsv = ColorOps.rgbToHSV(ColorOps.getRGB(pixelColors.get(i)));
+            int pitch = (int) MathOps.round(MathOps.map(hsv[0], 0, 360, 0, 11));
+            int duration = (int) MathOps.round(MathOps.map(hsv[1], 0, 100, 0, 4));
+            int octave = (int) MathOps.round(MathOps.map(hsv[2], 0, 100, -1, 1));
             int velocity = determineVelocity((long) noiseSpiral.get(i).getRGB(), averageNoiseColor);
 
             notes.add(modes[mode][pitch % 12] + key + (4 + octave) * 12);
@@ -213,9 +214,10 @@ public class Algorithm {
         }
 
         for (int i = 0; i < pixelColors.size(); i++) {
-            int pitch = (int) MathOps.round(MathOps.map(pixelColors.get(i).getRed(), 0, 255, 0, 11));
-            int duration = (int) MathOps.round(MathOps.map(pixelColors.get(i).getGreen(), 0, 255, 0, 4));
-            int octave = (int) MathOps.round(MathOps.map(pixelColors.get(i).getBlue(), 0, 255, -1, 1));
+            float[] hsv = ColorOps.rgbToHSV(ColorOps.getRGB(pixelColors.get(i)));
+            int pitch = (int) MathOps.round(MathOps.map(hsv[0], 0, 360, 0, 11));
+            int duration = (int) MathOps.round(MathOps.map(hsv[1], 0, 100, 0, 4));
+            int octave = (int) MathOps.round(MathOps.map(hsv[2], 0, 100, -1, 1));
             int velocity = determineVelocity((long) noiseSpiral.get(i).getRGB(), averageNoiseColor);
 
             notes.add(modes[mode][(pitch + 4) % 12] + key + (4 + octave) * 12);
@@ -242,9 +244,10 @@ public class Algorithm {
         }
 
         for (int i = 0; i < pixelColors.size(); i++) {
-            int pitch = (int) MathOps.round(MathOps.map(pixelColors.get(i).getRed(), 0, 255, 0, 11));
-            int duration = (int) MathOps.round(MathOps.map(pixelColors.get(i).getGreen(), 0, 255, 0, 4));
-            int octave = (int) MathOps.round(MathOps.map(pixelColors.get(i).getBlue(), 0, 255, -1, 1));
+            float[] hsv = ColorOps.rgbToHSV(ColorOps.getRGB(pixelColors.get(i)));
+            int pitch = (int) MathOps.round(MathOps.map(hsv[0], 0, 360, 0, 11));
+            int duration = (int) MathOps.round(MathOps.map(hsv[1], 0, 100, 0, 4));
+            int octave = (int) MathOps.round(MathOps.map(hsv[2], 0, 100, -1, 1));
             int velocity = determineVelocity((long) noiseSpiral.get(i).getRGB(), averageNoiseColor);
 
             notes.add(modes[mode][(pitch + 7) % 12] + key + (3 + octave) * 12);
@@ -271,9 +274,10 @@ public class Algorithm {
         }
 
         for (int i = 0; i < pixelColors.size(); i++) {
-            int pitch = (int) MathOps.round(MathOps.map(pixelColors.get(i).getRed(), 0, 255, 0, 11));
-            int duration = (int) MathOps.round(MathOps.map(pixelColors.get(i).getGreen(), 0, 255, 0, 4));
-            int octave = (int) MathOps.round(MathOps.map(pixelColors.get(i).getBlue(), 0, 255, -1, 1));
+            float[] hsv = ColorOps.rgbToHSV(ColorOps.getRGB(pixelColors.get(i)));
+            int pitch = (int) MathOps.round(MathOps.map(hsv[0], 0, 360, 0, 11));
+            int duration = (int) MathOps.round(MathOps.map(hsv[1], 0, 100, 0, 4));
+            int octave = (int) MathOps.round(MathOps.map(hsv[2], 0, 100, -1, 1));
             int velocity = determineVelocity((long) noiseSpiral.get(i).getRGB(), averageNoiseColor);
 
             notes.add(modes[mode][(pitch + 2) % 12] + key + (3 + octave) * 12);

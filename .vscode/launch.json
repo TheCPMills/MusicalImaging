@@ -3,6 +3,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "Launch PlaySequencer",
+            "request": "launch",
+            "mainClass": "main.PlaySequencer",
+            "projectName": "MusicalImaging_a38ac76f"
+        },
+        {
+            "type": "java",
             "name": "Launch ImageOps",
             "request": "launch",
             "mainClass": "main.ImageOps",
